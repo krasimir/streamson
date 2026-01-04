@@ -37,10 +37,9 @@ export default function Streamson(endpoint) {
   }
   function walk(node) {
     if (isPromisePlaceholder(node)) {
-      let p = new Promise((done) => {
+      return new Promise((done) => {
         promises.set(node, done);
       });
-      return p;
     }
     if (Array.isArray(node)) {
       return node.map((item) => walk(item));
@@ -90,5 +89,4 @@ export default function Streamson(endpoint) {
     }
   };
 }
-
 window.Streamson = Streamson;

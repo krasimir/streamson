@@ -11,9 +11,13 @@ export async function getBlogPosts() {
   }));
 }
 export async function getComments(postId) {
-  await new Promise((resolve) => setTimeout(resolve, 1500));
+  await randomDelay();
   return [
-    { id: 1, postId, content: "Great post!" },
-    { id: 2, postId, content: "Thanks for sharing." },
+    { id: 1, postId, content: "Great post! " + postId },
+    { id: 2, postId, content: "Thanks for sharing. " + postId },
   ];
+}
+
+function randomDelay() {
+  return new Promise((resolve) => setTimeout(resolve, Math.random() * 3000 + 1000));
 }

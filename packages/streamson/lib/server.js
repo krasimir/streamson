@@ -8,21 +8,11 @@ export function serve(res, data) {
   res.setHeader("Content-Type", "application/x-ndjson; charset=utf-8");
   res.setHeader("Transfer-Encoding", "chunked");
   send(getId(), data);
-  processData();
 
-  function send(id, chunk) {
-    res.write(JSON.stringify({ i: id, c: normalize(chunk) }) + "\n");
-  }
-  function done(id, value) {
-    send(id, value);
+  function send(id, value) {
+    res.write(JSON.stringify({ i: id, c: normalize(value) }) + "\n");
     promises = promises.filter((p) => p.id !== id);
-    processData();
-  }
-  function processData() {
-    if (promises.length === 0) {
-      res.end();
-      return;
-    }
+    if (promises.length === 0) res.end();
   }
   function registerPromise(promise, id) {
     let settled = false;
@@ -30,21 +20,20 @@ export function serve(res, data) {
       if (settled) return;
       settled = true;
       console.error(`Promise ${id} timed out after ${TIMEOUT}ms`);
-      done(id, { error: "timeout", timeoutMs: TIMEOUT });
+      send(id, { error: "timeout", timeoutMs: TIMEOUT });
     }, TIMEOUT);
-
     promises.push({ promise, id });
     promise.then((value) => {
       if (settled) return;
       settled = true;
       clearTimeout(timeoutHandle);
-      done(id, value);
+      send(id, value);
     }).catch((err) => {
       if (settled) return;
       settled = true;
       clearTimeout(timeoutHandle);
       console.error("Error resolving promise for path", err);
-      done(id, { error: "promise error", timeoutMs: TIMEOUT });
+      send(id, { error: "promise error", timeoutMs: TIMEOUT });
     });
   }
   function normalize(value) {
@@ -54,11 +43,9 @@ export function serve(res, data) {
         registerPromise(node, id);
         return id;
       }
-
       if (Array.isArray(node)) {
         return node.map((item) => walk(item));
       }
-
       if (node && typeof node === "object") {
         const out = {};
         for (const [key, val] of Object.entries(node)) {
@@ -68,7 +55,6 @@ export function serve(res, data) {
       }
       return node;
     }
-
     return walk(value);
   }
 }
