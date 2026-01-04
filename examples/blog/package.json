@@ -2,7 +2,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node ./server.js"
+    "dev": "cp ../../packages/streamson/dist/streamson.min.js  ./public/streamson.min.js && node ./server.js"
   },
   "dependencies": {
     "express": "^5.2.1"

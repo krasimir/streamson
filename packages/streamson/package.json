@@ -5,7 +5,7 @@
   "description": "A minimalistic library providing streaming of JSON",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node ./scripts/build.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/krasimir/streamson/issues"
   },
-  "homepage": "https://github.com/krasimir/streamson#readme"
+  "homepage": "https://github.com/krasimir/streamson#readme",
+  "devDependencies": {
+    "esbuild": "^0.27.1"
+  }
 }
