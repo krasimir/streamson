@@ -2,7 +2,8 @@ import fs from "node:fs";
 import express from "express";
 
 import { getBlogPosts } from "./lib/db.js";
-import { serve } from "../../packages/streamson/index.js";
+// import { serve } from "../../packages/streamson/index.js";
+import { serve } from "streamson";
 
 const app = express();
 const port = 5009;

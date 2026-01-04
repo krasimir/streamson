@@ -5,6 +5,7 @@
     "dev": "cp ../../packages/streamson/dist/streamson.min.js  ./public/streamson.min.js && node ./server.js"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "streamson": "^0.2.0"
   }
 }
