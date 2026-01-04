@@ -11,5 +11,15 @@ window.addEventListener('load', async () => {
   $description.textContent = data.description;
 
   const posts = await request.get('posts');
-  $content.innerHTML = posts.map(post => `<h2>${post.title}</h2>`).join('');
+  $content.innerHTML = posts.map(post => `<h2>${post.title}</h2><div id="post-${post.id}"></div>`).join('');
+
+  posts.forEach(loadComments);
+
+  async function loadComments(post) {
+    const $post = document.getElementById(`post-${post.id}`);
+    $post.innerHTML = '<h3>Comments:</h3><ul>Loading comments...</ul>';
+    const comments = await request.get(`posts.${posts.indexOf(post)}.comments`);
+    const commentsHtml = comments.map(comment => `<li>${comment.content}</li>`).join('');
+    $post.querySelector('ul').innerHTML = commentsHtml;
+  }
 })

@@ -7,11 +7,11 @@ export function serve(res, data) {
 
   res.setHeader("Content-Type", "application/x-ndjson; charset=utf-8");
   res.setHeader("Transfer-Encoding", "chunked");
-  send(getId(), normalize(data));
+  send(getId(), data);
   processData();
 
   function send(id, chunk) {
-    res.write(JSON.stringify({ i: id, c: chunk }) + "\n");
+    res.write(JSON.stringify({ i: id, c: normalize(chunk) }) + "\n");
   }
   function done(id, value) {
     send(id, value);
