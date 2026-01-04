@@ -14,7 +14,7 @@ To get the server bit:
 
 The client:
 
-https://unpkg.com/streamson@latest/dist/streamson.min.js
+https://unpkg.com/streamson@latest/dist/streamson.min.js (~1KB)
 
 ## Usage
 
@@ -74,4 +74,4 @@ const posts = await request.get('posts');
 console.log(posts); // Array of blog posts
 ```
 
-`Streamson` is a global variable available when you include the client script.
+`Streamson` is a global variable available when you include the client script. Notice that the `get` method can take an optional path argument so you can await on a specific part of the JSON structure. For example `request.get()` does not wait for the `posts` to be loaded, but `request.get('posts')` does. If you don't wait for a specific part, on its place you will get a promise.
