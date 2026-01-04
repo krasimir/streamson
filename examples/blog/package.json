@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node ./server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
